@@ -1,0 +1,26 @@
+member,columns,teammate_finding,rhea_issue,status,note
+Emma,media_type,"80 nulls, 56 tied to the missing-metadata block","DQ-07, DQ-08",Agrees,Emma also suggests exploring dropping the block. Rhea keeps the rows with an 'unknown' category and a targeting_info_missing flag.
+Emma,profession,56 nulls,DQ-10,Agrees,
+Emma,profession,"Numeric codes mixed with text, no codebook",DQ-09,Agrees,Both treat codes as categories and ask WebMD for the dictionary.
+Emma,specialty,"'undefined' and nulls hide missing data, use npi_specialty",DQ-12,"Agrees, different fix",Emma removes specialty from the model. Rhea keeps it as 'unknown' plus a has_specialty flag.
+Emma,specialty,11 numeric codes,DQ-13,"Agrees, different fix",Emma recodes them to NaN. Rhea keeps them as code_ labels.
+Emma,campaign_start_date,"3 nulls, stored as text",DQ-14,"Agrees, different fix",Emma drops the 3 rows. Rhea imputes the company median date and flags them. Same 3 rows where total_spend is blank (DQ-32).
+Emma,campaign_end_date,"2099 placeholder on 414 rows, drop column",DQ-15,Agrees,
+Emma,"profession, specialty",(not covered),DQ-11,Only in Rhea's report,36 rows pair psychologist with urology.
+Abhiram,total_budget_spent,2 rows at $0 with real engagement,DQ-18,Agrees,Rhea also flags 5 more rows with budgets far below cpe x engagements (7 in total).
+Abhiram,engagement_rate,Derived and rounded to 4 decimals,DQ-20,Agrees,"0 mismatches after rounding, so documenting the rounding is enough."
+Abhiram,"reach, engaged HCPs, engagements, budget","Strong right skew, consider log1p",DQ-16,Agrees,
+Abhiram,total_engagements,No nulls,DQ-17,Agrees,The milestone plan expected this column to be empty. Confirm the file version with the coach.
+Abhiram,"total_budget_spent, total_engagements",(not covered),DQ-19,Only in Rhea's report,Leakage for the CPE target: budget / engagements = cpe.
+Bakari,"engagement_frequency, pre_NRx, post_NRx, pre_avg_NRx","No nulls, all numeric, normalize",DQ-21,Agrees,"Normalization belongs in the modeling pipeline, not cleaning."
+Bakari,post_NRx,(not covered),DQ-22,Only in Rhea's report,"Post-campaign value, keep out of the feature sets."
+Timothy,post_avg_NRx,"20 high outliers, cap at IQR limit",DQ-23,"Agrees, different fix","Rhea keeps real values. Post-campaign, so it is excluded from features either way."
+Timothy,pre_NRx_avg,"14 high outliers, cap at IQR limit",DQ-24,"Agrees, different fix",Rhea flags an undocumented definition that differs from pre_avg_NRx. Ask WebMD before capping.
+Timothy,npi_specialty,"'3320 - Anesthesiologists', rename to 'Anesthesiology'",DQ-25,Agrees,Same fix.
+Timothy,region,"'West South Central' singleton, map to 'Southwest'",DQ-26,Agrees,Same fix. Same row (136) as the npi_specialty fix.
+Timothy,NRx_lift,"106 one-cent differences, recalculate",DQ-28,"Agrees, different fix",Rhea keeps the provided values. Recalculating puts 4 rows of NRx_lift_pct out of line.
+Timothy,region,(not covered),DQ-27,Only in Rhea's report,US regions on non-US countries (160 rows).
+Nida,NRx_lift_pct,"No nulls or out-of-range values, 8 IQR outliers",DQ-29,Adds detail,Rhea's report does not mention the 8 outliers.
+Nida,spend_per_NRx_lift,"2 zeros, 49 IQR outliers",DQ-35,Agrees,Rhea adds that this column leaks total_spend.
+Nida,"cpe, total_spend, actual_spend_per_engagement",(not covered),DQ-30 to DQ-34,Only in Rhea's report,"cpe nulls and target choice, median-filled and near-zero spend, spend range."
+Rhea,"brand, sub_product_name, country, pillar",Rhea's assigned columns,DQ-01 to DQ-06,Rhea only,No teammate notebook covers these columns.
