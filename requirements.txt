@@ -1,2 +1,7 @@
 pandas
+numpy
 scikit-learn
+xgboost
+matplotlib
+openpyxl
+jupyter
